@@ -9,11 +9,13 @@ import { useAuthStore } from "@/store/use-auth-store";
 
 const copy = authCopy.register;
 
+const field =
+  "h-12 w-full rounded-[10px] border border-line-soft bg-white px-5 text-[16px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand";
+
 export function RegisterForm() {
   const router = useRouter();
   const signIn = useAuthStore((s) => s.signIn);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [agreed, setAgreed] = useState(false);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,16 +38,9 @@ export function RegisterForm() {
       setError("Your password must be at least 6 characters.");
       return;
     }
-    if (!agreed) {
-      setError("Please accept the terms to continue.");
-      return;
-    }
     signIn({ name: form.name.trim(), email: form.email });
     router.push("/search");
   }
-
-  const field =
-    "h-13 w-full rounded-full border border-line bg-white px-6 text-[16px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand";
 
   return (
     <AuthShell
@@ -54,21 +49,21 @@ export function RegisterForm() {
       bannerTitle={copy.bannerTitle}
       bannerBody={copy.bannerBody}
     >
-      <p className="mt-12 text-[16px] text-ink-500">{copy.eyebrow}</p>
-      <h1 className="heading-lg mt-2 text-[36px] text-ink">
+      <p className="text-[15px] font-medium text-brand">{copy.eyebrow}</p>
+      <h1 className="heading-lg mt-2 text-[40px] text-ink">
         {copy.heading}
         <br />
         {copy.headingAccent}
       </h1>
 
-      <form onSubmit={onSubmit} className="mt-8" noValidate>
+      <form onSubmit={onSubmit} className="mt-12" noValidate>
         {error && (
-          <p role="alert" className="mb-5 text-[14px] text-red-600">
+          <p role="alert" className="mb-6 text-[14px] text-red-600">
             {error}
           </p>
         )}
 
-        <div className="space-y-5">
+        <div className="space-y-11">
           <div>
             <label htmlFor="reg-name" className="mb-2 block text-[15px] text-ink-500">
               Full Name
@@ -116,7 +111,7 @@ export function RegisterForm() {
               <button
                 type="button"
                 onClick={() => setShow((v) => !v)}
-                className="absolute right-5 top-1/2 grid h-6 w-6 -translate-y-1/2 cursor-pointer place-items-center text-ink-700"
+                className="absolute right-4 top-1/2 grid h-8 w-8 -translate-y-1/2 cursor-pointer place-items-center text-ink-700 transition-colors hover:text-brand"
                 aria-label={show ? "Hide password" : "Show password"}
               >
                 {show ? <EyeOff className="h-5 w-5" aria-hidden /> : <Eye className="h-5 w-5" aria-hidden />}
@@ -125,46 +120,17 @@ export function RegisterForm() {
           </div>
         </div>
 
-        <label className="mt-5 flex cursor-pointer items-start gap-3 text-[14px] leading-5 text-ink-500">
-          <input
-            type="checkbox"
-            checked={agreed}
-            onChange={(e) => {
-              setAgreed(e.target.checked);
-              setError("");
-            }}
-            className="peer sr-only"
-          />
-          <span
-            aria-hidden
-            className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[5px] border border-line transition-colors peer-checked:border-brand peer-checked:bg-brand"
-          >
-            {agreed && <span className="h-2 w-2 rotate-45 border-b-2 border-r-2 border-surface" />}
-          </span>
-          <span>
-            I agree to the{" "}
-            <a href="#" className="text-brand hover:underline">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-brand hover:underline">
-              Privacy Policy
-            </a>
-            .
-          </span>
-        </label>
-
-        <div className="mt-7 flex justify-end">
+        <div className="mt-8 flex justify-end">
           <button
             type="submit"
-            className="h-12 cursor-pointer rounded-full bg-brand px-10 text-[16px] font-medium text-surface transition-colors hover:bg-brand-dark"
+            className="h-12 cursor-pointer rounded-full bg-lime px-9 text-[16px] font-medium text-ink-900 transition-colors hover:bg-lime-dark"
           >
             {copy.submit}
           </button>
         </div>
       </form>
 
-      <div className="mt-8">
+      <div className="mt-16">
         <AuthSwitch prompt={copy.switchPrompt} action={copy.switchAction} href="/login" />
       </div>
     </AuthShell>

@@ -652,6 +652,7 @@ export const authCopy = {
     eyebrow: "Sign In",
     heading: "Welcome Back",
     submit: "Sign In",
+    divider: "or",
     switchPrompt: "New user?",
     switchAction: "Create an account",
     placeholder: { email: "designer@example.com", password: "********" },
@@ -662,11 +663,11 @@ export const authCopy = {
       "The registration process is straightforward, uncomplicated, and efficient, allowing users to sign up quickly, easily, and at no cost",
     eyebrow: "Create an Account",
     heading: "Welcome to",
-    headingAccent: "Bytespace",
+    headingAccent: "ByteSpace",
     submit: "Continue",
     switchPrompt: "Already have an account?",
     switchAction: "Login",
-    placeholder: { name: "JamieDavis", email: "designer@example.com", password: "********" },
+    placeholder: { name: "Jamie Davis", email: "designer@example.com", password: "********" },
   },
 };
 

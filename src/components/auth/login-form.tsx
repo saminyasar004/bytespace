@@ -4,17 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { AuthShell, AuthSwitch } from "@/components/auth/auth-shell";
+import { AuthDivider, SocialButtons } from "@/components/auth/social-buttons";
 import { authCopy } from "@/lib/data";
 import { useAuthStore } from "@/store/use-auth-store";
 
 const copy = authCopy.login;
+
+const field =
+  "h-12 w-full rounded-[10px] border border-line-soft bg-white px-5 text-[16px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand";
 
 export function LoginForm() {
   const router = useRouter();
   const signIn = useAuthStore((s) => s.signIn);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(true);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,9 +39,6 @@ export function LoginForm() {
     router.push("/search");
   }
 
-  const field =
-    "h-13 w-full rounded-full border border-line bg-white px-6 text-[16px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand";
-
   return (
     <AuthShell
       banner="/assets/signin-banner.svg"
@@ -46,17 +46,17 @@ export function LoginForm() {
       bannerTitle={copy.bannerTitle}
       bannerBody={copy.bannerBody}
     >
-      <p className="mt-12 text-[16px] text-ink-500">{copy.eyebrow}</p>
-      <h1 className="heading-lg mt-2 text-[36px] text-ink">{copy.heading}</h1>
+      <p className="text-[15px] font-medium text-brand">{copy.eyebrow}</p>
+      <h1 className="heading-lg mt-2 text-[40px] text-ink">{copy.heading}</h1>
 
-      <form onSubmit={onSubmit} className="mt-10" noValidate>
+      <form onSubmit={onSubmit} className="mt-12" noValidate>
         {error && (
-          <p role="alert" className="mb-5 text-[14px] text-red-600">
+          <p role="alert" className="mb-6 text-[14px] text-red-600">
             {error}
           </p>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div>
             <label htmlFor="login-email" className="mb-2 block text-[15px] text-ink-500">
               Email
@@ -95,7 +95,7 @@ export function LoginForm() {
               <button
                 type="button"
                 onClick={() => setShow((v) => !v)}
-                className="absolute right-5 top-1/2 grid h-6 w-6 -translate-y-1/2 cursor-pointer place-items-center text-ink-700"
+                className="absolute right-4 top-1/2 grid h-8 w-8 -translate-y-1/2 cursor-pointer place-items-center text-ink-700 transition-colors hover:text-brand"
                 aria-label={show ? "Hide password" : "Show password"}
               >
                 {show ? <EyeOff className="h-5 w-5" aria-hidden /> : <Eye className="h-5 w-5" aria-hidden />}
@@ -104,38 +104,25 @@ export function LoginForm() {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-between gap-4">
-          <label className="flex cursor-pointer items-center gap-2 text-[15px] text-ink-500">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-              className="peer sr-only"
-            />
-            <span
-              aria-hidden
-              className="grid h-5 w-5 place-items-center rounded-[5px] border border-line transition-colors peer-checked:border-brand peer-checked:bg-brand"
-            >
-              {remember && <span className="h-2 w-2 rotate-45 border-b-2 border-r-2 border-surface" />}
-            </span>
-            Remember me
-          </label>
-          <a href="#" className="text-[15px] text-ink-500 transition-colors hover:text-brand">
-            Forgot password?
-          </a>
-        </div>
-
-        <div className="mt-8 flex justify-end">
+        <div className="mt-10 flex justify-end">
           <button
             type="submit"
-            className="h-12 cursor-pointer rounded-full bg-brand px-10 text-[16px] font-medium text-surface transition-colors hover:bg-brand-dark"
+            className="h-12 cursor-pointer rounded-full bg-lime px-9 text-[16px] font-medium text-ink-900 transition-colors hover:bg-lime-dark"
           >
             {copy.submit}
           </button>
         </div>
       </form>
 
-      <div className="mt-10">
+      <div className="mt-14">
+        <AuthDivider label={copy.divider} />
+      </div>
+
+      <div className="mt-12">
+        <SocialButtons />
+      </div>
+
+      <div className="mt-14">
         <AuthSwitch prompt={copy.switchPrompt} action={copy.switchAction} href="/register" />
       </div>
     </AuthShell>
